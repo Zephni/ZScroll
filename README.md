@@ -1,6 +1,6 @@
 # ZScroll
 
-ZScroll is a very easy to implement area scroller using JQuery. [Preview here](http://zephni.com/tools/ZScroll)
+ZScroll is a very easy to implement area scroller using JQuery. [Preview here](http://zephni.com/site/pages/tools/ZScroll/index.php)
 
 **Note you must include JQuery, and the ZScroll JavaScript file as below:**
 ```
