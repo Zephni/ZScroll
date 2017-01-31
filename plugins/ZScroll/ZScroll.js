@@ -12,7 +12,8 @@ $.fn.extend({
 			ScrollBarWidth:5,
 			ScrollBarHeight:null,
 			ScrollBarMinHeight:10,
-			ScrollBarPadding:5,
+			ScrollBarPadding:10,
+			ScrollBarRadius:10,
 			ScrollWheelDistance:50,
 			Display:"auto"
 		};
@@ -22,15 +23,18 @@ $.fn.extend({
 			Options[key] = options[key];
 
 		// Do not apply if not needed
-		if(!Options.Display || (Options.Display == "auto" && $(this).prop("scrollHeight") < $(this).height()))
+		if(!Options.Display || (Options.Display == "auto" && $(this).prop("scrollHeight") <= $(this).height() + 1))
 			return;
 
-		// Setup		
+		// Setup
+		$(this).css({"position":"relative", "overflow":"hidden"});
+		$(this).css({"-webkit-touch-callout":"none", "-webkit-user-select":"none", "-khtml-user-select":"none", "-moz-user-select":"none", "-ms-user-select":"none", "user-select":"none"});
 		$(this).css({"width":$(this).width() - (Options.ScrollBarWidth + Options.ScrollBarPadding), "padding-right":Options.ScrollBarWidth + Options.ScrollBarPadding}); // This changes this
 		$(this).scrollTop(ScrollPercentage * $(this).height());
 
 		ScrollBar = $("<div class='ScrollBar'></div>");
-		ScrollBar.css({"position":"absolute", "right":0, "top":0, "width":Options.ScrollBarWidth, "min-height":Options.ScrollBarMinHeight, "background":Options.ScrollBarColor});
+		ScrollBar.css({"opacity":"0.5", "transition":"opacity .25s ease-in-out", "-moz-transition":"opacity .25s ease-in-out", "-webkit-transition":"opacity .25s ease-in-out"});
+		ScrollBar.css({"position":"absolute", "right":0, "top":0, "width":Options.ScrollBarWidth, "min-height":Options.ScrollBarMinHeight, "background":Options.ScrollBarColor, "border-radius":Options.ScrollBarRadius});
 
 		if(Options.ScrollBarHeight == null)
 			ScrollBar.css({"height":($(this).height() / $(this).prop("scrollHeight")) * $(this).height()});
@@ -40,21 +44,17 @@ $.fn.extend({
 		ScrollBar.mousedown(function(e){
 			DraggingBar = $(this);
 			DraggingBarOffset = DraggingBar.parent().offset().top + (e.pageY - DraggingBar.offset().top);
-
-			if(!$(this).hasClass("Highlighted"))
-				$(this).addClass("Highlighted");
+			$(this).css({"opacity":"1"});
 		});
 		ScrollBar.mouseover(function(){
 			HoveringDraggingBar = true;
-
-			if(!$(this).hasClass("Highlighted"))
-				$(this).addClass("Highlighted");
+			$(this).css({"opacity":"1"});
 		});
 		ScrollBar.mouseleave(function(){
 			HoveringDraggingBar = false;
 
 			if(!DraggingBar)
-				$(this).removeClass("Highlighted");
+				$(this).css({"opacity":"0.5"});
 		});
 
 		$(this).append(ScrollBar);
