@@ -29,8 +29,7 @@ $.fn.extend({
 
 		// Setup
 		$(this).css({"position":"relative", "overflow":"hidden"});
-		$(this).css({"-webkit-touch-callout":"none", "-webkit-user-select":"none", "-khtml-user-select":"none", "-moz-user-select":"none", "-ms-user-select":"none", "user-select":"none"});
-		$(this).css({"width":$(this).width() - (Options.ScrollBarWidth + Options.ScrollBarPadding), "padding-right":Options.ScrollBarWidth + Options.ScrollBarPadding}); // This changes this
+		$(this).css({"width":$(this).width() - (Options.ScrollBarWidth + Options.ScrollBarPadding), "padding-right":Options.ScrollBarWidth + Options.ScrollBarPadding});
 		$(this).scrollTop(ScrollPercentage * $(this).height());
 
 		// ScrollZone
