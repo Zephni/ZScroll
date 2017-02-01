@@ -8,6 +8,7 @@ $.fn.extend({
 
 		// Default options
 		Options = {
+			ScrollZoneColor:"#DDDDDD",
 			ScrollBarColor:"orange",
 			ScrollBarWidth:5,
 			ScrollBarHeight:null,
@@ -32,52 +33,56 @@ $.fn.extend({
 		$(this).css({"width":$(this).width() - (Options.ScrollBarWidth + Options.ScrollBarPadding), "padding-right":Options.ScrollBarWidth + Options.ScrollBarPadding}); // This changes this
 		$(this).scrollTop(ScrollPercentage * $(this).height());
 
-		ScrollBar = $("<div class='ScrollBar'></div>");
-		ScrollBar.css({"opacity":"0.5", "transition":"opacity .25s ease-in-out", "-moz-transition":"opacity .25s ease-in-out", "-webkit-transition":"opacity .25s ease-in-out"});
-		ScrollBar.css({"position":"absolute", "right":0, "top":0, "width":Options.ScrollBarWidth, "min-height":Options.ScrollBarMinHeight, "background":Options.ScrollBarColor, "border-radius":Options.ScrollBarRadius});
+		// ScrollZone
+			ScrollZone = $("<div class='ScrollZone'></div>");
+			ScrollZone.css({"position":"absolute", "right":0, "top":0, "width":Options.ScrollBarWidth, "height":"100%", "background":Options.ScrollZoneColor, "border-radius":Options.ScrollBarRadius});
 
-		if(Options.ScrollBarHeight == null)
-			ScrollBar.css({"height":($(this).height() / $(this).prop("scrollHeight")) * $(this).height()});
-		else
-			ScrollBar.css({"height":Options.ScrollBarHeight});
+			ScrollZone.mousedown(function(e){
+				DraggingBar = $(this).next(".ScrollBar");
+				DraggingBarOffset = DraggingBar.parent().offset().top + (DraggingBar.height() / 2);
+				DraggingBar.css({"opacity":"1"});
+				RePosition(e);
+			});
 
-		ScrollBar.mousedown(function(e){
-			DraggingBar = $(this);
-			DraggingBarOffset = DraggingBar.parent().offset().top + (e.pageY - DraggingBar.offset().top);
-			$(this).css({"opacity":"1"});
-		});
-		ScrollBar.mouseover(function(){
-			HoveringDraggingBar = true;
-			$(this).css({"opacity":"1"});
-		});
-		ScrollBar.mouseleave(function(){
-			HoveringDraggingBar = false;
+			$(this).append(ScrollZone);
 
-			if(!DraggingBar)
-				$(this).css({"opacity":"0.5"});
-		});
+		// ScrollBar
+			ScrollBar = $("<div class='ScrollBar'></div>");
+			ScrollBar.css({"opacity":"0.5", "transition":"opacity .25s ease-in-out", "-moz-transition":"opacity .25s ease-in-out", "-webkit-transition":"opacity .25s ease-in-out"});
+			ScrollBar.css({"position":"absolute", "right":0, "top":0, "width":Options.ScrollBarWidth, "min-height":Options.ScrollBarMinHeight, "background":Options.ScrollBarColor, "border-radius":Options.ScrollBarRadius});
 
-		$(this).append(ScrollBar);
+			if(Options.ScrollBarHeight == null)
+				ScrollBar.css({"height":($(this).height() / $(this).prop("scrollHeight")) * $(this).height()});
+			else
+				ScrollBar.css({"height":Options.ScrollBarHeight});
+
+			ScrollBar.mousedown(function(e){
+				DraggingBar = $(this);
+				DraggingBarOffset = DraggingBar.parent().offset().top + (e.pageY - DraggingBar.offset().top);
+				$(this).css({"opacity":"1"});
+			});
+			ScrollBar.mouseover(function(){
+				HoveringDraggingBar = true;
+				$(this).css({"opacity":"1"});
+			});
+			ScrollBar.mouseleave(function(){
+				HoveringDraggingBar = false;
+
+				if(!DraggingBar)
+					$(this).css({"opacity":"0.5"});
+			});
+
+			$(this).append(ScrollBar);
 
 		// Events
 		$(document).mousemove(function(e){
-			if(!DraggingBar) return;
-
-			newPosY = e.pageY - DraggingBarOffset;
-			if(newPosY < 0) newPosY = 0;
-			else if(newPosY > DraggingBar.parent().height() - DraggingBar.height()) newPosY = DraggingBar.parent().height() - DraggingBar.height();
-
-			ScrollPercentage = newPosY / (DraggingBar.parent().height() - DraggingBar.height());
-			DraggingBar.parent().scrollTop(ScrollPercentage * (DraggingBar.parent().prop("scrollHeight") - DraggingBar.parent().height()));
-			DraggingBar.css({"top":DraggingBar.parent().scrollTop() + newPosY});
-
-			return false;
+			return RePosition(e);
 		});
 
 		$(document).mouseup(function(){
 			if(DraggingBar && !HoveringDraggingBar)
 			{
-				DraggingBar.removeClass("Highlighted");
+				DraggingBar.css({"opacity":"0.5"});
 				DraggingBar = false;
 				return false;
 			}
@@ -93,8 +98,24 @@ $.fn.extend({
 
 			ScrollPercentage = ($(this).scrollTop() / ($(this).prop("scrollHeight") - $(this).height()));
 			$(this).find(".ScrollBar").css({"top":$(this).scrollTop() + (ScrollPercentage * ($(this).height() - $(this).find(".ScrollBar").height()))});
+			$(this).find(".ScrollZone").css({"top":$(this).scrollTop()});
 
 			return false;
 		});
+
+		function RePosition(e){
+			if(!DraggingBar) return;
+
+			newPosY = e.pageY - DraggingBarOffset;
+			if(newPosY < 0) newPosY = 0;
+			else if(newPosY > DraggingBar.parent().height() - DraggingBar.height()) newPosY = DraggingBar.parent().height() - DraggingBar.height();
+
+			ScrollPercentage = newPosY / (DraggingBar.parent().height() - DraggingBar.height());
+			DraggingBar.parent().scrollTop(ScrollPercentage * (DraggingBar.parent().prop("scrollHeight") - DraggingBar.parent().height()));
+			DraggingBar.css({"top":DraggingBar.parent().scrollTop() + newPosY});
+			DraggingBar.prev(".ScrollZone").css({"top":DraggingBar.parent().scrollTop()});
+
+			return false;
+		}
 	}
 });
