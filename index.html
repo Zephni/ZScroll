@@ -47,41 +47,40 @@
 			<h3>How to</h3>
 			<p><b>Note you must include JQuery, and the ZScroll CSS/JavaScript files as below:</b></p>
 
-			<div class="code"><?php echo nl2br(htmlentities('<!-- JQuery plugin -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-
-<!-- ZScroll Dependancies -->
-<link rel="stylesheet" type="text/css" href="plugins/ZScroll/ZScroll.css" />
-<script src="plugins/ZScroll/ZScroll.js"></script>'));
-			?></div>
+			<div class="code">
+				&#x3C;!-- JQuery plugin --&#x3E;<br />
+				&#x3C;script src=&#x22;https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js&#x22;&#x3E;&#x3C;/script&#x3E;<br />
+				<br />
+				&#x3C;!-- ZScroll Dependancies --&#x3E;<br />
+				&#x3C;script src=&#x22;plugins/ZScroll/ZScroll.js&#x22;&#x3E;&#x3C;/script&#x3E;
+			</div>
 
 			<p><b>To apply to an element, just call .ZScroll() on a JQuery element as below:</b></p>
 
-			<div class="code"><?php echo nl2br(htmlentities('<!-- Apply ZScroll to all elements with class ".ZScroll" -->
-<script type="text/javascript">
-    $(document).ready(function(){
-        $(".ZScroll").ZScroll();
-    });
-</script>')); ?></div>
+			<div class="code">
+				$(document).ready(function(){<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;$(&#x22;.ZScroll&#x22;).ZScroll();<br />
+				});
+			</div>
 
 
 			<p><b>You can pass the following options as an object into ZScroll (Values shown are defaults):</b></p>
 
-			<div class="code"><?php echo nl2br(htmlentities('// ScrollBarColor:"orange",
-				// ScrollBarWidth:5,
-				// ScrollBarHeight:null,
-				// ScrollBarMinHeight:10,
-				// ScrollBarPadding:5,
-				// ScrollWheelDistance:50,
-				// Display:"auto"
-
-				// Pass like:
-				$(".ZScroll").ZScroll({
-				    ScrollBarColor:"#CCCCCC",
-				    ScrollBarWidth:10
-				});')); ?></div>
-
-		</div>
-
+			<div class="code">
+				// ScrollZoneColor:&#x22;#DDDDDD&#x22;,<br />
+				// ScrollBarColor:&#x22;orange&#x22;,<br />
+				// ScrollBarWidth:5,<br />
+				// ScrollBarHeight:null,<br />
+				// ScrollBarMinHeight:10,<br />
+				// ScrollBarPadding:5,<br />
+				// ScrollWheelDistance:50,<br />
+				// Display:&#x22;auto&#x22;<br />
+				<br />
+				// Pass like:<br />
+				$(&#x22;.ZScroll&#x22;).ZScroll({<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;ScrollBarColor:&#x22;#CCCCCC&#x22;,<br />
+				&nbsp;&nbsp;&nbsp;&nbsp;ScrollBarWidth:10<br />
+				});
+			</div>
 	</body>
 </html>
