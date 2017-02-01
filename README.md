@@ -23,7 +23,7 @@ ZScroll is a very easy to implement area scroller using JQuery. [Preview here](h
 
 **You can pass the following options as an object into ZScroll (Values shown are defaults):**
 ```
-// ScrollBarZone:"#DDDDDD",
+// ScrollZoneColor:"#DDDDDD",
 // ScrollBarColor:"orange",
 // ScrollBarWidth:5,
 // ScrollBarHeight:null,
