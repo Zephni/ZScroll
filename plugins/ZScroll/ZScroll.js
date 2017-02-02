@@ -1,6 +1,6 @@
 $.fn.extend({
 	ZScroll: function(options = {}){
-		$(this).each(function(){
+		return $(this).each(function(){
 			// Variables
 			HoveringDraggingBar = false;
 			DraggingBar = false;
