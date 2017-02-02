@@ -61,8 +61,11 @@ $.fn.extend({
 				$(this).css({"opacity":"1"});
 			});
 			ScrollBar.mouseover(function(){
-				HoveringDraggingBar = true;
-				$(this).css({"opacity":"1"});
+				if(!DraggingBar && !HoveringDraggingBar)
+				{
+					HoveringDraggingBar = true;
+					$(this).css({"opacity":"1"});
+				}
 			});
 			ScrollBar.mouseleave(function(){
 				HoveringDraggingBar = false;
