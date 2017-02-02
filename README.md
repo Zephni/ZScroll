@@ -26,13 +26,17 @@ $(document).ready(function(){
 // ScrollBarWidth:5,
 // ScrollBarHeight:null,
 // ScrollBarMinHeight:10,
-// ScrollBarPadding:5,
+// ScrollBarPadding:10,
+// ScrollBarRadius:10,
+// ScrollBarUnusedCSS:{"opacity":0.5},
+// ScrollBarInUseCSS:{"opacity":1},
+// ScrollBarOpacityEasing:300,
 // ScrollWheelDistance:50,
 // Display:"auto"
 
 // Pass like:
 $(".ZScroll").ZScroll({
-	ScrollBarColor:"#CCCCCC",
+	ScrollBarColor:"green",
 	ScrollBarWidth:10
 });
 ```
