@@ -15,6 +15,9 @@ $.fn.extend({
 			ScrollBarMinHeight:10,
 			ScrollBarPadding:10,
 			ScrollBarRadius:10,
+			ScrollBarUnusedCSS:{"opacity":0.5},
+			ScrollBarInUseCSS:{"opacity":1},
+			ScrollBarOpacityEasing:300,
 			ScrollWheelDistance:50,
 			Display:"auto"
 		};
@@ -47,7 +50,7 @@ $.fn.extend({
 
 		// ScrollBar
 			ScrollBar = $("<div class='ScrollBar'></div>");
-			ScrollBar.css({"opacity":"0.5", "transition":"opacity .25s ease-in-out", "-moz-transition":"opacity .25s ease-in-out", "-webkit-transition":"opacity .25s ease-in-out"});
+			ScrollBar.css(Options.ScrollBarUnusedCSS);
 			ScrollBar.css({"position":"absolute", "right":0, "top":0, "width":Options.ScrollBarWidth, "min-height":Options.ScrollBarMinHeight, "background":Options.ScrollBarColor, "border-radius":Options.ScrollBarRadius});
 
 			if(Options.ScrollBarHeight == null)
@@ -58,20 +61,20 @@ $.fn.extend({
 			ScrollBar.mousedown(function(e){
 				DraggingBar = $(this);
 				DraggingBarOffset = DraggingBar.parent().offset().top + (e.pageY - DraggingBar.offset().top);
-				$(this).css({"opacity":"1"});
+				DraggingBar.stop().animate(Options.ScrollBarInUseCSS, Options.ScrollBarOpacityEasing);
 			});
 			ScrollBar.mouseover(function(){
 				if(!DraggingBar && !HoveringDraggingBar)
 				{
 					HoveringDraggingBar = true;
-					$(this).css({"opacity":"1"});
+					$(this).stop().animate(Options.ScrollBarInUseCSS, Options.ScrollBarOpacityEasing);
 				}
 			});
 			ScrollBar.mouseleave(function(){
 				HoveringDraggingBar = false;
 
 				if(!DraggingBar)
-					$(this).css({"opacity":"0.5"});
+					$(this).stop().animate(Options.ScrollBarUnusedCSS, Options.ScrollBarOpacityEasing);
 			});
 
 			$(this).append(ScrollBar);
@@ -84,7 +87,7 @@ $.fn.extend({
 		$(document).mouseup(function(){
 			if(DraggingBar && !HoveringDraggingBar)
 			{
-				DraggingBar.css({"opacity":"0.5"});
+				DraggingBar.stop().animate(Options.ScrollBarUnusedCSS, Options.ScrollBarOpacityEasing);
 				DraggingBar = false;
 				return false;
 			}
