@@ -32,7 +32,8 @@ $(document).ready(function(){
 // ScrollBarInUseCSS:{"opacity":1},
 // ScrollBarOpacityEasing:300,
 // ScrollWheelDistance:50,
-// Display:"auto"
+// Active:"auto"
+// Display:true
 
 // Pass like:
 $(".ZScroll").ZScroll({

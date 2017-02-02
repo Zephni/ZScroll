@@ -20,7 +20,8 @@ $.fn.extend({
 				ScrollBarInUseCSS:{"opacity":1},
 				ScrollBarOpacityEasing:300,
 				ScrollWheelDistance:50,
-				Display:"auto"
+				Active:"auto",
+				Display:true
 			};
 
 			// Apply custom options
@@ -28,7 +29,7 @@ $.fn.extend({
 				Options[key] = options[key];
 
 			// Do not apply if not needed
-			if(!Options.Display || (Options.Display == "auto" && $(this).prop("scrollHeight") <= $(this).height() + 1))
+			if(!Options.Active || (Options.Active == "auto" && $(this).prop("scrollHeight") <= $(this).height() + 1))
 				return;
 
 			// Setup
@@ -81,6 +82,13 @@ $.fn.extend({
 				});
 
 				$(this).append(ScrollBar);
+
+			// Hide if display off
+			if(!Options.Display)
+			{
+				ScrollBar.hide();
+				ScrollZone.hide();
+			}
 
 			// Events
 			$(document).mousemove(function(e){
